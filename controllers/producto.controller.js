@@ -3,7 +3,8 @@ const Cliente = require('../models/cliente.model');
 
 exports.crearProducto = async (req, res) => {
   try {
-    const cliente = await Cliente.findById(req.body.clienteId);
+    // Busca al cliente por cédula
+    const cliente = await Cliente.findOne({ cedula: req.body.cedulaCliente });
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
@@ -11,15 +12,16 @@ exports.crearProducto = async (req, res) => {
     const nuevoProducto = new Producto({
       nombre: req.body.nombre,
       precio: req.body.precio,
-      cliente: req.body.clienteId
+      cedulaCliente: req.body.cedulaCliente // Cambia de clienteId a cedulaCliente
     });
 
     await nuevoProducto.save();
 
     // Agregar el nuevo producto al cliente
-    await Cliente.findByIdAndUpdate(req.body.clienteId, {
-      $push: { productosComprados: nuevoProducto._id }
-    });
+    await Cliente.findOneAndUpdate(
+      { cedula: req.body.cedulaCliente },
+      { $push: { productosComprados: nuevoProducto._id } }
+    );
 
     res.status(201).json(nuevoProducto);
   } catch (error) {

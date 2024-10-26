@@ -15,6 +15,12 @@ const PORT = 10000;
 app.use(bodyParser.json());
 
 
+// Middleware de manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log del error
+  res.status(500).json({ message: 'Algo salió mal!', error: err.message });
+});
+
 // Usar rutas
 app.use('/clientes', clienteRoutes);
 app.use('/productos', productoRoutes);

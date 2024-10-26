@@ -11,16 +11,15 @@ exports.crearCliente = async (req, res) => {
   }
 };
 
-
-// Eliminar cliente por ID
-exports.eliminarClientePorId = async (req, res) => {
+// Eliminar cliente por cedula
+exports.eliminarClientePorCedula = async (req, res) => {
   try {
-    const clienteId = req.params.id.trim();
-    if (!clienteId) {
-      return res.status(400).json({ message: 'ID inválido' });
+    const cedula = req.params.cedula.trim();
+    if (!cedula) {
+      return res.status(400).json({ message: 'Cédula inválida' });
     }
     
-    const clienteEliminado = await Cliente.findByIdAndDelete(clienteId);
+    const clienteEliminado = await Cliente.findOneAndDelete({ cedula });
     
     if (!clienteEliminado) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
@@ -33,16 +32,15 @@ exports.eliminarClientePorId = async (req, res) => {
   }
 };
 
-
-
-// Actualizar cliente por ID
-exports.actualizarClientePorId = async (req, res) => {
+// Actualizar cliente por cedula
+exports.actualizarClientePorCedula = async (req, res) => {
   try {
-    const clienteActualizado = await Cliente.findByIdAndUpdate(
-      req.params.id, // Usar el ID proporcionado en la ruta
+    const clienteActualizado = await Cliente.findOneAndUpdate(
+      { cedula: req.params.cedula }, // Usar la cédula proporcionada en la ruta
       req.body, // Datos a actualizar
       { new: true, runValidators: true } // Devuelve el documento actualizado y ejecuta validadores
     );
+    
     if (!clienteActualizado) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
@@ -62,13 +60,11 @@ exports.mostrarTodosLosClientes = async (req, res) => {
   }
 };
 
-
-
 // Mostrar todos los productos del cliente
 exports.listarProductosPorCliente = async (req, res) => {
   try {
-    const clienteId = req.params.id; // Obtiene el ID del cliente de los parámetros de la ruta
-    const cliente = await Cliente.findById(clienteId).populate('productosComprados'); // Usa populate para obtener los productos
+    const cedula = req.params.cedula; // Obtiene la cédula del cliente de los parámetros de la ruta
+    const cliente = await Cliente.findOne({ cedula }).populate('productosComprados'); // Usa populate para obtener los productos
 
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
