@@ -3,9 +3,9 @@ POST http://localhost:10000/clientes HTTP/1.1
 Content-Type: application/json
 
 {
-    "cedula": "1107092833",
-    "nombre": "claudia cristina",
-    "email": "claudia.cristina@example.com"
+    "cedula": "1112628968",
+    "nombre": "Yonathan",
+    "email": "Ynathan.cjimenezristina@example.com"
 }
 
 
@@ -26,3 +26,22 @@ Content-Type: application/json
 
 ### Mostrar todos los clientes
 GET http://localhost:10000/clientes HTTP/1.1
+
+
+
+### Mostrar los productos de un cliente
+GET http://localhost:10000/clientes/671d03a0d5e7a0b443d04ab6/productos
+
+
+
+################__________________________________________________________##################################
+
+
+POST http://localhost:10000/productos HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre": "Producto 2",
+    "precio": 20,
+    "clienteId": "671d03a0d5e7a0b443d04ab6"
+}

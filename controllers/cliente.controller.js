@@ -61,3 +61,22 @@ exports.mostrarTodosLosClientes = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener los clientes', error });
   }
 };
+
+
+
+// Mostrar todos los productos del cliente
+exports.listarProductosPorCliente = async (req, res) => {
+  try {
+    const clienteId = req.params.id; // Obtiene el ID del cliente de los parámetros de la ruta
+    const cliente = await Cliente.findById(clienteId).populate('productosComprados'); // Usa populate para obtener los productos
+
+    if (!cliente) {
+      return res.status(404).json({ message: 'Cliente no encontrado' });
+    }
+
+    res.json(cliente.productosComprados); // Devuelve los productos comprados por el cliente
+  } catch (error) {
+    console.error('Error al listar productos por cliente:', error);
+    res.status(500).json({ message: 'Error al listar productos', error });
+  }
+};

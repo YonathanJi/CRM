@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 // Importar rutas
 const clienteRoutes = require('./routes/cliente.routes');
-
+const productoRoutes = require('./routes/producto.routes');
 
 // Importar configuración de la base de datos
 require('./config/database');
@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 
 // Usar rutas
 app.use('/clientes', clienteRoutes);
+app.use('/productos', productoRoutes);
 
 
 // Iniciar servidor

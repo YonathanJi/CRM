@@ -14,5 +14,9 @@ router.put('/:id', clienteController.actualizarClientePorId);
 // Mostrar todos los clientes
 router.get('/', clienteController.mostrarTodosLosClientes);
 
+// Ruta para listar productos comprados por un cliente
+router.get('/:id/productos', clienteController.listarProductosPorCliente);
+
+
 
 module.exports = router;
