@@ -1,0 +1,25 @@
+###
+POST http://localhost:10000/clientes HTTP/1.1
+Content-Type: application/json
+
+{
+    "cedula": "1107092833",
+    "nombre": "Carlos Maria Benites",
+    "email": "jonathan@hotmail.com",
+    "productosComprados": []
+}
+
+###
+GET http://localhost:10000/clientes/cedula/1112628967 HTTP/1.1
+
+###
+PUT http://localhost:10000/clientes/cedula/1112628967 HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre": "Carlos Maria Benites Actualizado",
+    "email": "carlos.actualizado@hotmail.com"
+}
+
+###
+DELETE http://localhost:10000/clientes/cedula/1112628967 HTTP/1.1

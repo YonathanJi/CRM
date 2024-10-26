@@ -21,10 +21,10 @@ exports.obtenerClientes = async (req, res) => {
   }
 };
 
-// Obtener un cliente por ID
-exports.obtenerClientePorId = async (req, res) => {
+// Obtener un cliente por cédula (como identificador principal)
+exports.obtenerClientePorCedula = async (req, res) => {
   try {
-    const cliente = await Cliente.findById(req.params.id).populate('productosComprados');
+    const cliente = await Cliente.findOne({ cedula: req.params.cedula }).populate('productosComprados');
     if (!cliente) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
@@ -34,10 +34,15 @@ exports.obtenerClientePorId = async (req, res) => {
   }
 };
 
-// Actualizar un cliente
-exports.actualizarCliente = async (req, res) => {
+
+// Actualizar cliente por cédula
+exports.actualizarClientePorCedula = async (req, res) => {
   try {
-    const clienteActualizado = await Cliente.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const clienteActualizado = await Cliente.findOneAndUpdate(
+      { cedula: req.params.cedula },
+      req.body,
+      { new: true }
+    );
     if (!clienteActualizado) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
@@ -47,10 +52,11 @@ exports.actualizarCliente = async (req, res) => {
   }
 };
 
-// Eliminar un cliente
-exports.eliminarCliente = async (req, res) => {
+
+// Eliminar cliente por cédula
+exports.eliminarClientePorCedula = async (req, res) => {
   try {
-    const clienteEliminado = await Cliente.findByIdAndDelete(req.params.id);
+    const clienteEliminado = await Cliente.findOneAndDelete({ cedula: req.params.cedula });
     if (!clienteEliminado) {
       return res.status(404).json({ message: 'Cliente no encontrado' });
     }
