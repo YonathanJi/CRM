@@ -3,23 +3,13 @@ POST http://localhost:10000/clientes HTTP/1.1
 Content-Type: application/json
 
 {
-    "cedula": "1107092833",
-    "nombre": "Carlos Maria Benites",
-    "email": "jonathan@hotmail.com",
-    "productosComprados": []
+    "cedula": "1112628967",
+    "nombre": "Yonathan Jimenez",
+    "email": "Yonathan.Jimenez@example.com"
 }
 
 ###
-GET http://localhost:10000/clientes/cedula/1112628967 HTTP/1.1
-
-###
-PUT http://localhost:10000/clientes/cedula/1112628967 HTTP/1.1
+### Eliminar un cliente
+DELETE http://localhost:10000/clientes/671d01a0d4514563094d76f7 HTTP/1.1
 Content-Type: application/json
 
-{
-    "nombre": "Carlos Maria Benites Actualizado",
-    "email": "carlos.actualizado@hotmail.com"
-}
-
-###
-DELETE http://localhost:10000/clientes/cedula/1112628967 HTTP/1.1

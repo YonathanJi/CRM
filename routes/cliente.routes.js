@@ -3,18 +3,9 @@ const router = express.Router();
 const clienteController = require('../controllers/cliente.controller');
 
 // Crear un nuevo cliente
-router.post('/clientes', clienteController.crearCliente);
+router.post('/', clienteController.crearCliente);
 
-// Obtener todos los clientes
-router.get('/clientes', clienteController.obtenerClientes);
-
-// Obtener cliente por cédula
-router.get('/clientes/cedula/:cedula', clienteController.obtenerClientePorCedula);
-
-// Actualizar cliente por cédula
-router.put('/clientes/cedula/:cedula', clienteController.actualizarClientePorCedula);
-
-// Eliminar cliente por cédula
-router.delete('/clientes/cedula/:cedula', clienteController.eliminarClientePorCedula);
+// Ruta para eliminar un cliente por ID
+router.delete('/:id', clienteController.eliminarClientePorId);
 
 module.exports = router;
