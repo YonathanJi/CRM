@@ -11,6 +11,7 @@ exports.crearCliente = async (req, res) => {
   }
 };
 
+
 // Eliminar cliente por ID
 exports.eliminarClientePorId = async (req, res) => {
   try {
@@ -29,5 +30,34 @@ exports.eliminarClientePorId = async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar cliente:', error);
     res.status(500).json({ message: 'Error al eliminar cliente', error });
+  }
+};
+
+
+
+// Actualizar cliente por ID
+exports.actualizarClientePorId = async (req, res) => {
+  try {
+    const clienteActualizado = await Cliente.findByIdAndUpdate(
+      req.params.id, // Usar el ID proporcionado en la ruta
+      req.body, // Datos a actualizar
+      { new: true, runValidators: true } // Devuelve el documento actualizado y ejecuta validadores
+    );
+    if (!clienteActualizado) {
+      return res.status(404).json({ message: 'Cliente no encontrado' });
+    }
+    res.json(clienteActualizado); // Devuelve el cliente actualizado
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar cliente', error });
+  }
+};
+
+// Mostrar todos los clientes
+exports.mostrarTodosLosClientes = async (req, res) => {
+  try {
+    const clientes = await Cliente.find(); // Obtiene todos los clientes de la base de datos
+    res.json(clientes); // Devuelve la lista de clientes
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener los clientes', error });
   }
 };
